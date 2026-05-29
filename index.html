@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shaibaaz Shaik — DevOps · Cloud · Platform & AI Engineer</title>
+<meta name="description" content="Shaibaaz Shaik — DevOps, Cloud Platform & AI Infrastructure engineer with 10+ years building and scaling enterprise cloud infrastructure across AWS, GCP, and Azure. Open to any opportunity.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0e14;
+    --bg-soft: #0f1620;
+    --surface: #131c28;
+    --surface-2: #1a2533;
+    --border: rgba(255,255,255,0.08);
+    --border-strong: rgba(255,255,255,0.16);
+    --text: #e8edf4;
+    --text-muted: #9aa7b8;
+    --text-dim: #5f6c7e;
+    --accent: #4dd0e1;
+    --accent-2: #7c9eff;
+    --accent-3: #b388ff;
+    --gold: #ffc857;
+    --green: #5ddfa0;
+    --glow: rgba(77,208,225,0.35);
+    --grad: linear-gradient(120deg, #4dd0e1, #7c9eff 50%, #b388ff);
+    --shadow: 0 20px 60px -20px rgba(0,0,0,0.7);
+  }
+
+  [data-theme="light"] {
+    --bg: #f6f8fb;
+    --bg-soft: #eef2f8;
+    --surface: #ffffff;
+    --surface-2: #f1f5fa;
+    --border: rgba(10,20,40,0.08);
+    --border-strong: rgba(10,20,40,0.16);
+    --text: #0f1b2d;
+    --text-muted: #475569;
+    --text-dim: #8493a8;
+    --accent: #0891b2;
+    --accent-2: #4f6ef7;
+    --accent-3: #8b5cf6;
+    --gold: #d99b1c;
+    --green: #15a06a;
+    --glow: rgba(8,145,178,0.25);
+    --grad: linear-gradient(120deg, #0891b2, #4f6ef7 50%, #8b5cf6);
+    --shadow: 0 20px 50px -22px rgba(20,40,80,0.25);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    font-size: 16px;
+    overflow-x: hidden;
+    transition: background .4s ease, color .4s ease;
+  }
+
+  ::selection { background: var(--accent); color: #04121a; }
+
+  a { color: inherit; text-decoration: none; }
+  h1,h2,h3,h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; line-height: 1.15; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* Animated background canvas */
+  #bg-canvas {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .55;
+  }
+  .bg-glow {
+    position: fixed; border-radius: 50%; filter: blur(120px); z-index: 0; pointer-events: none; opacity: .5;
+  }
+  .bg-glow.g1 { width: 480px; height: 480px; background: var(--accent); top: -120px; left: -80px; }
+  .bg-glow.g2 { width: 520px; height: 520px; background: var(--accent-3); bottom: -160px; right: -120px; opacity:.4; }
+
+  .wrap { max-width: 1140px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+  /* ---------- NAV ---------- */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: color-mix(in srgb, var(--bg) 72%, transparent);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s, background .3s, padding .3s;
+    padding: 18px 0;
+  }
+  nav.scrolled { border-bottom-color: var(--border); padding: 12px 0; }
+  .nav-inner { max-width: 1140px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; }
+  .brand { display: flex; align-items: center; gap: 10px; font-family: 'Space Grotesk'; font-weight: 700; font-size: 17px; letter-spacing: -.02em; }
+  .brand .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--grad); box-shadow: 0 0 14px var(--glow); }
+  .nav-links { display: flex; gap: 6px; list-style: none; align-items: center; }
+  .nav-links a {
+    font-size: 14px; color: var(--text-muted); padding: 8px 14px; border-radius: 8px;
+    transition: color .2s, background .2s; font-weight: 500;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--text); background: var(--surface); }
+  .nav-actions { display: flex; align-items: center; gap: 10px; }
+  .theme-btn {
+    width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border);
+    background: var(--surface); color: var(--text); cursor: pointer; display: grid; place-items: center;
+    transition: border-color .2s, transform .2s; font-size: 17px;
+  }
+  .theme-btn:hover { border-color: var(--border-strong); transform: translateY(-1px); }
+  .cta-btn {
+    font-size: 14px; font-weight: 600; padding: 9px 18px; border-radius: 10px;
+    background: var(--grad); color: #04121a; transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 8px 24px -8px var(--glow);
+  }
+  .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 30px -8px var(--glow); }
+  .menu-toggle { display: none; background: none; border: none; color: var(--text); font-size: 24px; cursor: pointer; }
+
+  /* ---------- HERO ---------- */
+  header.hero { padding: 180px 0 100px; position: relative; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500;
+    padding: 6px 14px; border-radius: 999px; border: 1px solid var(--border);
+    background: var(--surface); color: var(--text-muted); margin-bottom: 26px;
+  }
+  .hero-badge .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--green); position: relative; }
+  .hero-badge .pulse::after { content:''; position:absolute; inset:0; border-radius:50%; background: var(--green); animation: pulse 1.8s infinite; }
+  @keyframes pulse { 0%{transform:scale(1);opacity:.7} 100%{transform:scale(3.2);opacity:0} }
+  .hero h1 { font-size: clamp(2.6rem, 6vw, 4.6rem); letter-spacing: -.03em; margin-bottom: 8px; }
+  .hero h1 .grad { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero .roles { font-size: clamp(1.05rem,2.4vw,1.5rem); color: var(--text-muted); font-family:'Space Grotesk'; font-weight:500; margin-bottom: 22px; min-height: 1.5em; }
+  .hero .roles .typed { color: var(--accent); border-right: 2px solid var(--accent); padding-right: 3px; }
+  .hero p.lead { max-width: 640px; font-size: 1.08rem; color: var(--text-muted); margin-bottom: 34px; }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-bottom: 38px; font-size: 14px; color: var(--text-muted); }
+  .hero-meta span { display: inline-flex; align-items: center; gap: 8px; }
+  .hero-meta svg { width: 16px; height: 16px; stroke: var(--accent); }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+  .btn-ghost {
+    font-size: 14px; font-weight: 600; padding: 12px 22px; border-radius: 10px;
+    border: 1px solid var(--border-strong); color: var(--text); transition: border-color .2s, transform .2s, background .2s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-ghost:hover { border-color: var(--accent); transform: translateY(-2px); background: var(--surface); }
+  .btn-primary {
+    font-size: 14px; font-weight: 600; padding: 12px 24px; border-radius: 10px;
+    background: var(--grad); color: #04121a; transition: transform .2s, box-shadow .2s; box-shadow: 0 10px 30px -10px var(--glow);
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 36px -10px var(--glow); }
+
+  /* ---------- STATS ---------- */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 70px; }
+  .stat {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 26px 22px;
+    transition: transform .3s, border-color .3s; position: relative; overflow: hidden;
+  }
+  .stat::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background: var(--grad); transform: scaleX(0); transform-origin:left; transition: transform .4s; }
+  .stat:hover { transform: translateY(-4px); border-color: var(--border-strong); }
+  .stat:hover::before { transform: scaleX(1); }
+  .stat .num { font-family:'Space Grotesk'; font-size: 2.4rem; font-weight: 700; background: var(--grad); -webkit-background-clip:text; background-clip:text; color: transparent; }
+  .stat .label { font-size: 13.5px; color: var(--text-muted); margin-top: 4px; }
+
+  /* ---------- SECTIONS ---------- */
+  section { padding: 90px 0; position: relative; }
+  .sec-head { margin-bottom: 50px; }
+  .sec-tag { font-family:'JetBrains Mono'; font-size: 13px; color: var(--accent); letter-spacing: .12em; text-transform: uppercase; display: inline-flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .sec-tag::before { content:''; width: 28px; height: 1px; background: var(--accent); }
+  .sec-head h2 { font-size: clamp(1.9rem, 4vw, 2.8rem); letter-spacing: -.02em; }
+  .sec-head p { color: var(--text-muted); max-width: 620px; margin-top: 14px; }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 50px; align-items: start; }
+  .about-grid p { color: var(--text-muted); margin-bottom: 18px; font-size: 1.05rem; }
+  .about-grid .lead-strong { color: var(--text); font-weight: 500; }
+  .strengths { display: grid; gap: 12px; }
+  .strength {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px;
+    display: flex; gap: 14px; transition: border-color .25s, transform .25s;
+  }
+  .strength:hover { border-color: var(--accent); transform: translateX(4px); }
+  .strength .ic { width: 38px; height: 38px; flex: none; border-radius: 9px; background: var(--surface-2); display: grid; place-items: center; font-size: 18px; }
+  .strength h4 { font-size: 15px; margin-bottom: 2px; }
+  .strength p { font-size: 13.5px; color: var(--text-muted); margin: 0; }
+
+  /* ---------- AWARDS ---------- */
+  .awards-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+  .award {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px 24px;
+    transition: transform .3s, border-color .3s; position: relative;
+  }
+  .award:hover { transform: translateY(-6px); border-color: var(--gold); box-shadow: var(--shadow); }
+  .award .ic { font-size: 28px; margin-bottom: 16px; }
+  .award h3 { font-size: 1.15rem; margin-bottom: 8px; }
+  .award .year { font-family:'JetBrains Mono'; font-size: 12px; color: var(--gold); margin-bottom: 10px; }
+  .award p { font-size: 14px; color: var(--text-muted); }
+
+  /* ---------- EXPERIENCE TABS ---------- */
+  .exp-layout { display: grid; grid-template-columns: 280px 1fr; gap: 36px; }
+  .exp-tabs { display: flex; flex-direction: column; gap: 6px; }
+  .exp-tab {
+    text-align: left; background: none; border: none; border-left: 2px solid var(--border);
+    padding: 14px 18px; cursor: pointer; color: var(--text-muted); transition: all .25s; border-radius: 0 8px 8px 0;
+  }
+  .exp-tab:hover { background: var(--surface); color: var(--text); }
+  .exp-tab.active { border-left-color: var(--accent); background: var(--surface); color: var(--text); }
+  .exp-tab .co { font-family:'Space Grotesk'; font-weight: 600; font-size: 15px; }
+  .exp-tab .role { font-size: 12.5px; color: var(--text-dim); margin-top: 2px; }
+  .exp-panel { display: none; animation: fadeUp .5s ease; }
+  .exp-panel.active { display: block; }
+  @keyframes fadeUp { from{opacity:0; transform: translateY(14px);} to{opacity:1; transform:none;} }
+  .exp-panel h3 { font-size: 1.4rem; }
+  .exp-panel .meta { display: flex; flex-wrap: wrap; gap: 8px 18px; color: var(--text-muted); font-size: 14px; margin: 10px 0 18px; font-family:'JetBrains Mono'; }
+  .exp-panel .desc { color: var(--text-muted); margin-bottom: 22px; }
+  .exp-points { list-style: none; display: grid; gap: 14px; }
+  .exp-points li { display: flex; gap: 14px; align-items: flex-start; }
+  .exp-points li .arrow { color: var(--accent); flex: none; margin-top: 3px; }
+  .exp-points li strong { color: var(--text); }
+  .exp-points li span { color: var(--text-muted); font-size: 15px; }
+
+  /* ---------- PROJECTS ---------- */
+  .proj-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 22px; }
+  .proj {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 30px;
+    transition: transform .3s, border-color .3s; position: relative; overflow: hidden;
+  }
+  .proj::after { content:''; position: absolute; inset: 0; background: radial-gradient(400px circle at var(--mx,50%) var(--my,0%), color-mix(in srgb,var(--accent) 10%, transparent), transparent 60%); opacity:0; transition: opacity .3s; pointer-events:none; }
+  .proj:hover { transform: translateY(-5px); border-color: var(--border-strong); box-shadow: var(--shadow); }
+  .proj:hover::after { opacity: 1; }
+  .proj .ptag { font-family:'JetBrains Mono'; font-size: 11.5px; color: var(--accent); text-transform: uppercase; letter-spacing: .1em; }
+  .proj-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .status { font-family:'JetBrains Mono'; font-size: 10.5px; font-weight: 500; letter-spacing: .08em; padding: 3px 9px; border-radius: 999px; text-transform: uppercase; border: 1px solid; }
+  .status.prod { color: var(--green); border-color: color-mix(in srgb, var(--green) 45%, transparent); background: color-mix(in srgb, var(--green) 12%, transparent); }
+  .status.poc { color: var(--accent-3); border-color: color-mix(in srgb, var(--accent-3) 45%, transparent); background: color-mix(in srgb, var(--accent-3) 12%, transparent); }
+  .status.ongoing { color: var(--gold); border-color: color-mix(in srgb, var(--gold) 45%, transparent); background: color-mix(in srgb, var(--gold) 12%, transparent); }
+  .status.done { color: var(--text-muted); border-color: var(--border-strong); }
+  .proj.hidden { display: none; }
+  .proj h3 { font-size: 1.3rem; margin: 12px 0 12px; }
+  .proj p { color: var(--text-muted); font-size: 14.5px; margin-bottom: 18px; }
+  .proj .metrics { display: flex; flex-wrap: wrap; gap: 18px; margin-bottom: 20px; }
+  .proj .metric .v { font-family:'Space Grotesk'; font-weight: 700; font-size: 1.5rem; color: var(--green); }
+  .proj .metric .k { font-size: 12px; color: var(--text-dim); }
+  .chips { display: flex; flex-wrap: wrap; gap: 7px; }
+  .chip { font-size: 12px; font-family:'JetBrains Mono'; padding: 4px 11px; border-radius: 999px; background: var(--surface-2); color: var(--text-muted); border: 1px solid var(--border); }
+
+  /* ---------- SKILLS ---------- */
+  .skill-filters { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 32px; }
+  .filter-btn {
+    font-size: 13.5px; font-weight: 500; padding: 8px 16px; border-radius: 999px; cursor: pointer;
+    background: var(--surface); border: 1px solid var(--border); color: var(--text-muted); transition: all .2s;
+  }
+  .filter-btn:hover { border-color: var(--border-strong); color: var(--text); }
+  .filter-btn.active { background: var(--grad); color: #04121a; border-color: transparent; }
+  .skills-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 18px; }
+  .skill-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; transition: opacity .3s, transform .3s, border-color .3s; }
+  .skill-card.hidden { display: none; }
+  .skill-card h4 { font-size: 14px; color: var(--accent); margin-bottom: 14px; font-family:'JetBrains Mono'; letter-spacing:.04em; }
+  .skill-card .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  /* ---------- TESTIMONIALS ---------- */
+  .quotes { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+  .quote {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px;
+    position: relative; transition: transform .3s, border-color .3s;
+  }
+  .quote:hover { transform: translateY(-4px); border-color: var(--accent-2); }
+  .quote .mark { font-family:'Space Grotesk'; font-size: 3rem; line-height: 1; color: var(--accent); opacity: .4; }
+  .quote p { color: var(--text); font-size: 15px; font-style: italic; margin: 8px 0 18px; }
+  .quote .who { font-size: 13.5px; color: var(--text-muted); }
+  .quote .who strong { color: var(--text); display: block; font-family:'Space Grotesk'; }
+
+  /* ---------- CONTACT ---------- */
+  .contact-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 24px; padding: 60px 50px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .contact-card::before { content:''; position:absolute; inset:0; background: var(--grad); opacity:.06; }
+  .contact-card h2 { font-size: clamp(1.8rem,4vw,2.6rem); position: relative; }
+  .contact-card p { color: var(--text-muted); max-width: 520px; margin: 16px auto 30px; position: relative; }
+  .contact-actions { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; position: relative; }
+
+  /* ---------- FOOTER ---------- */
+  footer { border-top: 1px solid var(--border); padding: 36px 0; }
+  .foot-inner { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; color: var(--text-dim); font-size: 13.5px; }
+
+  /* reveal */
+  .reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* scroll progress */
+  #progress { position: fixed; top: 0; left: 0; height: 3px; background: var(--grad); width: 0%; z-index: 200; transition: width .1s; }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px) {
+    .stats { grid-template-columns: repeat(2,1fr); }
+    .about-grid, .exp-layout { grid-template-columns: 1fr; gap: 30px; }
+    .awards-grid, .proj-grid, .skills-grid, .quotes { grid-template-columns: 1fr; }
+    .exp-tabs { flex-direction: row; overflow-x: auto; padding-bottom: 6px; }
+    .exp-tab { border-left: none; border-bottom: 2px solid var(--border); border-radius: 8px 8px 0 0; white-space: nowrap; }
+    .exp-tab.active { border-left: none; border-bottom-color: var(--accent); }
+    .nav-links { display: none; position: absolute; top: 100%; right: 24px; flex-direction: column; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 10px; min-width: 180px; box-shadow: var(--shadow); }
+    .nav-links.open { display: flex; }
+    .menu-toggle { display: block; }
+    .nav-links a.active, .nav-links a:hover { background: var(--surface-2); }
+  }
+  @media (max-width: 520px) {
+    .contact-card { padding: 40px 24px; }
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div class="bg-glow g1"></div>
+<div class="bg-glow g2"></div>
+<canvas id="bg-canvas"></canvas>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand"><span class="dot"></span> Shaibaaz Shaik</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#awards">Awards</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="theme-btn" id="themeBtn" title="Toggle theme">🌙</button>
+      <a href="#contact" class="cta-btn">Let's talk</a>
+      <button class="menu-toggle" id="menuToggle">☰</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="wrap">
+    <span class="hero-badge"><span class="pulse"></span> Available immediately · Open to any opportunity worldwide</span>
+    <h1>Shaibaaz <span class="grad">Shaik</span></h1>
+    <div class="roles">I build <span class="typed" id="typed"></span></div>
+    <p class="lead">DevOps, Cloud Platform & AI Infrastructure engineer with <strong>10+ years</strong> designing, automating, and scaling enterprise cloud infrastructure across AWS, GCP, and Azure. I don't hand off halfway — I own outcomes from architecture through security review, deployment, and business adoption.</p>
+    <div class="hero-meta">
+      <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg> Edmonton, Alberta · Canadian Citizen</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg> shaibaaz_shaik@outlook.com</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.6A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.5-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.6 2.6.7a2 2 0 0 1 1.7 2Z"/></svg> +1 (672) 515-4786</span>
+    </div>
+    <div class="hero-actions">
+      <a href="#experience" class="btn-primary">Explore my work →</a>
+      <a href="#contact" class="btn-ghost">Get in touch</a>
+    </div>
+
+    <div class="stats reveal">
+      <div class="stat"><div class="num" data-target="10" data-suffix="+">0</div><div class="label">Years of experience</div></div>
+      <div class="stat"><div class="num" data-target="30" data-suffix="+">0</div><div class="label">AWS accounts managed</div></div>
+      <div class="stat"><div class="num" data-target="270" data-suffix="+">0</div><div class="label">Terraform projects</div></div>
+      <div class="stat"><div class="num" data-target="20" data-suffix="+">0</div><div class="label">EKS clusters</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">01 · Profile</span>
+      <h2>Engineering at the intersection of DevOps, software & AI</h2>
+    </div>
+    <div class="about-grid">
+      <div class="reveal">
+        <p class="lead-strong">Most DevOps engineers manage infrastructure. I build products.</p>
+        <p>I combine deep technical expertise with end-to-end product ownership — building production systems from architecture through deployment, stakeholder alignment, security review, and business adoption. I don't wait to be handed requirements; I identify problems, propose solutions, build them, and drive them to production.</p>
+        <p>Recognized as a <strong>Super Achiever</strong> (top 5–7% globally), <strong>Operational Excellence Award</strong> winner, and <strong>TechOps Hackathon</strong> champion at PSL Group — endorsed by multiple CTOs and senior leaders for technical excellence and cross-functional delivery.</p>
+        <p>In an era where AI is reshaping engineering, I'm already building AI-powered agents and using AI as a core part of my engineering toolkit — reducing average incident resolution time by 30–40% through AI-assisted troubleshooting.</p>
+      </div>
+      <div class="strengths reveal">
+        <div class="strength"><div class="ic">🎯</div><div><h4>End-to-End Ownership</h4><p>Designs, builds, deploys & maintains production systems entirely.</p></div></div>
+        <div class="strength"><div class="ic">🤖</div><div><h4>AI-Native Engineering</h4><p>Bedrock, Copilot & custom MCP setups as core engineering tools.</p></div></div>
+        <div class="strength"><div class="ic">🤝</div><div><h4>Stakeholder-Driven</h4><p>Translates business requirements into shipped technical solutions.</p></div></div>
+        <div class="strength"><div class="ic">🔒</div><div><h4>Security by Default</h4><p>HMAC-SHA256, WAF, Cognito, OIDC, mTLS, Checkov, tfsec from day one.</p></div></div>
+        <div class="strength"><div class="ic">🚨</div><div><h4>Incident Command</h4><p>Primary P0 responder with executive-level postmortem documentation.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AWARDS -->
+<section id="awards">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">02 · Recognition</span>
+      <h2>Career achievements & recognition</h2>
+      <p>Independently nominated and endorsed across a 500+ person global organization.</p>
+    </div>
+    <div class="awards-grid">
+      <div class="award reveal"><div class="ic">🏆</div><div class="year">2026</div><h3>Super Achiever Rating</h3><p>Highest performance rating — top 5–7% of employees globally. Required cross-departmental calibration & documented business impact. Accompanied by a $10,277 bonus.</p></div>
+      <div class="award reveal"><div class="ic">⭐</div><div class="year">2026</div><h3>Operational Excellence Award</h3><p>Won in the AI Power Users category. Recognized for applying AI-native approaches to DevOps troubleshooting, incident response & infrastructure automation.</p></div>
+      <div class="award reveal"><div class="ic">🥇</div><div class="year">2025</div><h3>TechOps Hackathon Winner</h3><p>Winning entry for an innovative DevOps automation solution that demonstrated AI-assisted infrastructure management.</p></div>
+      <div class="award reveal"><div class="ic">🎖️</div><div class="year">Leadership</div><h3>CTO & SVP Endorsements</h3><p>Direct endorsements from multiple CTOs and an SVP for delivery quality, collaboration & technical leadership.</p></div>
+      <div class="award reveal"><div class="ic">📈</div><div class="year">Impact</div><h3>Business Stakeholder Impact</h3><p>"One of the greatest endeavors of my career." Multiple stakeholders independently nominated for the Operational Excellence Award.</p></div>
+      <div class="award reveal"><div class="ic">⚡</div><div class="year">Operations</div><h3>30–40% Faster Resolution</h3><p>Reduced average incident resolution time through AI-assisted troubleshooting & systematic root cause analysis.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">03 · Career</span>
+      <h2>Professional experience</h2>
+      <p>A decade of building secure, scalable cloud platforms across healthcare, SaaS, Web3, IoT, cybersecurity & finance.</p>
+    </div>
+    <div class="exp-layout reveal">
+      <div class="exp-tabs" role="tablist">
+        <button class="exp-tab active" data-tab="psl"><div class="co">P\S\L Group</div><div class="role">Senior DevOps Engineer</div></button>
+        <button class="exp-tab" data-tab="cuboh"><div class="co">Cuboh</div><div class="role">Cloud DevOps Engineer</div></button>
+        <button class="exp-tab" data-tab="pencil"><div class="co">PencilData</div><div class="role">Sr. Cloud/DevOps Consultant</div></button>
+        <button class="exp-tab" data-tab="tile"><div class="co">Tile Inc.</div><div class="role">DevOps Engineer</div></button>
+        <button class="exp-tab" data-tab="bt"><div class="co">BeyondTrust</div><div class="role">DevOps Engineer</div></button>
+        <button class="exp-tab" data-tab="scotia"><div class="co">Scotiabank</div><div class="role">DevOps Engineer</div></button>
+      </div>
+      <div class="exp-content">
+        <div class="exp-panel active" id="psl">
+          <h3>Senior DevOps Engineer · P\S\L Group Canada Ltd</h3>
+          <div class="meta"><span>📅 May 2021 – May 2026</span><span>📍 Remote · Edmonton, AB</span><span>🏥 Healthcare Marketing Technology</span></div>
+          <p class="desc">Primary DevOps resource supporting 10+ concurrent business-critical initiatives, managing cloud infrastructure across FirstWord, AMI, Data Management & MEC Live Events divisions.</p>
+          <ul class="exp-points">
+            <li><span class="arrow">▸</span><span><strong>Multi-Account AWS:</strong> Managed 30+ AWS accounts & 20+ EKS clusters with Terraform Enterprise (270+ projects), remote state & policy-as-code with Sentinel.</span></li>
+            <li><span class="arrow">▸</span><span><strong>EKS Migration:</strong> CAB-approved migration achieving 85% faster deployments & 20% cost savings, zero downtime.</span></li>
+            <li><span class="arrow">▸</span><span><strong>AIMATCH UBQ3 Automation:</strong> Processed 1,298 creatives at 100% success rate in 78 minutes — ~$48,000 annual savings, delivered in 4 business days.</span></li>
+            <li><span class="arrow">▸</span><span><strong>SFTP Bridge:</strong> Drove a 127-day blocked project through 7 approval gates to production.</span></li>
+            <li><span class="arrow">▸</span><span><strong>DougallPSL & PSL Labs AI:</strong> Primary DevOps support for Claude-powered AI platforms — built production APIs (API Gateway, Lambda, Cognito) with token auto-refresh.</span></li>
+            <li><span class="arrow">▸</span><span><strong>P0 Incident Response:</strong> Primary responder across multiple teams with systematic RCA & executive-level postmortems.</span></li>
+          </ul>
+        </div>
+        <div class="exp-panel" id="cuboh">
+          <h3>Cloud DevOps Engineer · Cuboh</h3>
+          <div class="meta"><span>📅 Apr 2021 – Aug 2022</span><span>📍 Victoria, BC (Remote)</span><span>🍽️ SaaS / Restaurant Tech</span></div>
+          <p class="desc">Managed EC2, S3, RDS & EKS infrastructure for a SaaS platform with a focus on cost efficiency & automation.</p>
+          <ul class="exp-points">
+            <li><span class="arrow">▸</span><span><strong>Cost Optimization:</strong> Reduced monthly cloud spend by 25%.</span></li>
+            <li><span class="arrow">▸</span><span><strong>CI/CD Automation:</strong> Jenkins & GitHub Actions pipelines cut build & deployment times by 40%.</span></li>
+            <li><span class="arrow">▸</span><span><strong>Monitoring:</strong> Centralized observability with Datadog & ELK Stack, improving detection & MTTR.</span></li>
+            <li><span class="arrow">▸</span><span><strong>Infrastructure as Code:</strong> Standardized multi-region Terraform modules across dev, staging & prod.</span></li>
+          </ul>
+        </div>
+        <div class="exp-panel" id="pencil">
+          <h3>Senior Cloud/DevOps Consultant · PencilData</h3>
+          <div class="meta"><span>📅 Jun 2020 – May 2021</span><span>📍 Remote, Canada</span><span>⛓️ Blockchain / Web3</span></div>
+          <p class="desc">Designed cloud-native architectures on AWS for high-availability blockchain applications with strict performance & security requirements.</p>
+          <ul class="exp-points">
+            <li><span class="arrow">▸</span><span><strong>Cloud Architecture:</strong> High-availability designs for performance-critical blockchain workloads.</span></li>
+            <li><span class="arrow">▸</span><span><strong>GitOps:</strong> ArgoCD workflows for declarative continuous delivery with automated rollback.</span></li>
+            <li><span class="arrow">▸</span><span><strong>Security Hardening:</strong> Kubernetes & OpenShift hardening — network policies, RBAC & SCCs.</span></li>
+            <li><span class="arrow">▸</span><span><strong>Compliance Automation:</strong> Terraform & Ansible enforcement across all infrastructure.</span></li>
+          </ul>
+        </div>
+        <div class="exp-panel" id="tile">
+          <h3>DevOps Engineer · Tile Inc.</h3>
+          <div class="meta"><span>📅 Dec 2019 – Jun 2020</span><span>📍 Vancouver, BC</span><span>📡 IoT / Consumer Electronics</span></div>
+          <p class="desc">Managed EC2, ECS & S3 infrastructure for an IoT platform with a focus on scaling containerized workloads.</p>
+          <ul class="exp-points">
+            <li><span class="arrow">▸</span><span><strong>AWS Operations:</strong> Reduced cloud costs through instance & storage optimization.</span></li>
+            <li><span class="arrow">▸</span><span><strong>Container Orchestration:</strong> Deployed & scaled workloads on OpenShift & Kubernetes with HA configs.</span></li>
+            <li><span class="arrow">▸</span><span><strong>CI/CD Pipelines:</strong> Jenkins pipelines for enterprise-scale microservices with automated testing & security scanning.</span></li>
+          </ul>
+        </div>
+        <div class="exp-panel" id="bt">
+          <h3>DevOps Engineer · BeyondTrust</h3>
+          <div class="meta"><span>📅 Apr 2017 – Nov 2019</span><span>📍 Halifax, NS</span><span>🛡️ Cybersecurity</span></div>
+          <p class="desc">Designed secure cloud infrastructure on AWS integrating security best practices for a global cybersecurity products company.</p>
+          <ul class="exp-points">
+            <li><span class="arrow">▸</span><span><strong>Security Infrastructure:</strong> AWS architectures with embedded security best practices.</span></li>
+            <li><span class="arrow">▸</span><span><strong>SIEM Implementation:</strong> ELK Stack for security monitoring, threat detection & incident response.</span></li>
+            <li><span class="arrow">▸</span><span><strong>Automation:</strong> Jenkins CI/CD pipelines streamlining deployments & reducing manual effort.</span></li>
+            <li><span class="arrow">▸</span><span><strong>Documentation:</strong> Runbooks, incident response procedures & infrastructure docs for enterprise operations.</span></li>
+          </ul>
+        </div>
+        <div class="exp-panel" id="scotia">
+          <h3>DevOps Engineer · Scotiabank</h3>
+          <div class="meta"><span>📅 Mar 2016 – Mar 2017</span><span>📍 Toronto, ON</span><span>🏦 Financial Services</span></div>
+          <p class="desc">Provisioned VMware environments for mission-critical banking applications with high-availability requirements.</p>
+          <ul class="exp-points">
+            <li><span class="arrow">▸</span><span><strong>Virtualization:</strong> Managed VMware environments for mission-critical banking apps.</span></li>
+            <li><span class="arrow">▸</span><span><strong>Configuration Management:</strong> Ansible & Chef for consistent, repeatable provisioning.</span></li>
+            <li><span class="arrow">▸</span><span><strong>CI/CD:</strong> Jenkins pipelines meeting strict security & compliance requirements.</span></li>
+            <li><span class="arrow">▸</span><span><strong>Monitoring:</strong> Centralized logging & monitoring with ELK Stack for banking systems.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">04 · Flagship Work</span>
+      <h2>Complete project portfolio</h2>
+      <p>Production business systems — not infrastructure tickets. A builder who takes problems from concept to production, owns the architecture, and measures success by business outcomes.</p>
+    </div>
+    <div class="skill-filters reveal" id="projFilters">
+      <button class="filter-btn active" data-pfilter="all">All</button>
+      <button class="filter-btn" data-pfilter="psl">PSL Group</button>
+      <button class="filter-btn" data-pfilter="ai">AI / Agentic</button>
+      <button class="filter-btn" data-pfilter="platform">Platform / IaC</button>
+      <button class="filter-btn" data-pfilter="incident">Incidents</button>
+      <button class="filter-btn" data-pfilter="earlier">Earlier Roles</button>
+    </div>
+    <div class="proj-grid" id="projGrid">
+
+      <div class="proj reveal" data-pcat="psl ai">
+        <div class="proj-top"><span class="ptag">Serverless · Flagship</span><span class="status prod">Production</span></div>
+        <h3>MEC Content Automation Platform</h3>
+        <p>Replaced a fragile, manual conference workflow with a secure serverless bridge between the MEC team's Google Sheets and PSL's internal file servers — Python 3.11 Lambda in a private VPC, API Gateway behind Cloudflare WAF, HMAC-SHA256 signing, Secrets Manager & least-privilege IAM. Chunked downloads handle 25MB+ PPTX files. Live for ASCO 2026.</p>
+        <div class="metrics">
+          <div class="metric"><div class="v">32s</div><div class="k">file delivery (was hours)</div></div>
+          <div class="metric"><div class="v">4</div><div class="k">shares live, zero dev/integration</div></div>
+          <div class="metric"><div class="v">4.5→2.5</div><div class="k">security risk score</div></div>
+        </div>
+        <div class="chips"><span class="chip">Lambda</span><span class="chip">API Gateway</span><span class="chip">HMAC-SHA256</span><span class="chip">Cloudflare WAF</span><span class="chip">FSx / SFTP</span><span class="chip">EventBridge</span><span class="chip">New Relic</span><span class="chip">Apps Script</span></div>
+      </div>
+
+      <div class="proj reveal" data-pcat="psl ai">
+        <div class="proj-top"><span class="ptag">Agentic AI · IaC</span><span class="status poc">POC</span></div>
+        <h3>DevOps Pipeline Agent</h3>
+        <p>A six-agent hierarchy (Supervisor, Terraform Scanner, SAM Scanner, PSL Compliance, Final Analyzer, PR Reporter) on AWS Bedrock + MCP servers. Automatically reviews every pull request, scans IaC, checks PSL policies, and posts structured findings as PR comments — foundation for PSL's broader AI-powered DevOps toolchain.</p>
+        <div class="metrics">
+          <div class="metric"><div class="v">6</div><div class="k">coordinated AI agents</div></div>
+          <div class="metric"><div class="v">2 hrs</div><div class="k">full redesign from scratch</div></div>
+          <div class="metric"><div class="v">Pre-deploy</div><div class="k">compliance scanning</div></div>
+        </div>
+        <div class="chips"><span class="chip">Bedrock</span><span class="chip">Claude Sonnet</span><span class="chip">MCP Servers</span><span class="chip">GitHub Actions</span><span class="chip">Terraform</span><span class="chip">SAM</span></div>
+      </div>
+
+      <div class="proj reveal" data-pcat="psl ai">
+        <div class="proj-top"><span class="ptag">AI Platform</span><span class="status prod">Production</span></div>
+        <h3>DougallPSL — Internal AI Platform</h3>
+        <p>Primary DevOps support for PSL's Claude-powered internal AI platform. Drove production go-live by unblocking cross-team infrastructure dependencies, managed EKS across all environments, supported Haystack AI framework integration, and served as primary incident responder.</p>
+        <div class="chips"><span class="chip">EKS</span><span class="chip">Lambda</span><span class="chip">API Gateway</span><span class="chip">ArgoCD</span><span class="chip">Terraform</span><span class="chip">Haystack</span></div>
+      </div>
+
+      <div class="proj reveal" data-pcat="psl ai">
+        <div class="proj-top"><span class="ptag">AI APIs</span><span class="status prod">Production</span></div>
+        <h3>Parser LLM Integration — PSL Labs</h3>
+        <p>Built secure LLM parsing APIs for PSL Labs — API Gateway + Lambda with Cognito user/identity pools and an automatic token-refresh mechanism for seamless access. Independent staging and production environments with isolated security boundaries.</p>
+        <div class="chips"><span class="chip">API Gateway</span><span class="chip">Lambda</span><span class="chip">Cognito</span><span class="chip">IAM</span><span class="chip">CloudFormation</span></div>
+      </div>
+
+      <div class="proj reveal" data-pcat="psl platform">
+        <div class="proj-top"><span class="ptag">Search · Analytics</span><span class="status prod">Production</span></div>
+        <h3>NESS Analytics OpenSearch Pipeline</h3>
+        <p>Delivered a previously-blocked production OpenSearch pipeline end-to-end: environment builds across dev/staging/prod, Cognito + Fine-Grained Access Control, CI/CD for index management, zero-downtime blue/green cluster upgrades, and resolution of complex KMS/IAM policy blockers.</p>
+        <div class="chips"><span class="chip">OpenSearch</span><span class="chip">Cognito</span><span class="chip">FGAC</span><span class="chip">KMS</span><span class="chip">IAM</span><span class="chip">Terraform</span></div>
+      </div>
+
+      <div class="proj reveal" data-pcat="psl">
+        <div class="proj-top"><span class="ptag">Automation</span><span class="status prod">Production</span></div>
+        <h3>AIMATCH UBQ3 Automation</h3>
+        <p>End-to-end automated pipeline processing 1,298 advertising creatives for the UBQ3 campaign with zero downtime — delivered from requirement to production in just 4 business days.</p>
+        <div class="metrics">
+          <div class="metric"><div class="v">1,298</div><div class="k">creatives · 100% success</div></div>
+          <div class="metric"><div class="v">$48K</div><div class="k">annual savings</div></div>
+          <div class="metric"><div class="v">78 min</div><div class="k">processing, zero downtime</div></div>
+        </div>
+        <div class="chips"><span class="chip">Python</span><span class="chip">Lambda</span><span class="chip">Step Functions</span><span class="chip">S3</span><span class="chip">DynamoDB</span></div>
+      </div>
+
+      <div class="proj reveal" data-pcat="psl platform">
+        <div class="proj-top"><span class="ptag">Migration</span><span class="status prod">Production</span></div>
+        <h3>Admin-UI ECS → EKS Migration</h3>
+        <p>CAB-approved, zero-downtime blue/green migration aligning Admin-UI with PSL's Kubernetes-first strategy — target EKS architecture design, service mesh & ingress, and updated GitHub Actions + ArgoCD pipelines.</p>
+        <div class="metrics">
+          <div class="metric"><div class="v">85%</div><div class="k">faster deployments</div></div>
+          <div class="metric"><div class="v">20%</div><div class="k">cost reduction</div></div>
+          <div class="metric"><div class="v">0</div><div class="k">downtime</div></div>
+        </div>
+        <div class="chips"><span class="chip">EKS</span><span class="chip">ECS</span><span class="chip">ArgoCD</span><span class="chip">Helm</span><span class="chip">Terraform</span></div>
+      </div>
+
+      <div class="proj reveal" data-pcat="psl">
+        <div class="proj-top"><span class="ptag">Unblocking</span><span class="status prod">Production</span></div>
+        <h3>SFTP Bridge — 127-Day Blocked Project</h3>
+        <p>Took a critical integration from 127 days stuck across 7 approval gates to production — proposed an alternative architecture that bypassed organizational blockers and coordinated NOC, Security, network ops & business stakeholders to closure.</p>
+        <div class="metrics">
+          <div class="metric"><div class="v">127→0</div><div class="k">days blocked to shipped</div></div>
+          <div class="metric"><div class="v">7</div><div class="k">approval gates navigated</div></div>
+        </div>
+        <div class="chips"><span class="chip">SFTP</span><span class="chip">VPC</span><span class="chip">Security Groups</span><span class="chip">IAM</span><span class="chip">NOC</span></div>
+      </div>
+
+      <div class="proj reveal" data-pcat="psl">
+        <div class="proj-top"><span class="ptag">Emergency</span><span class="status prod">Production</span></div>
+        <h3>Emergency Holiday Data Migration</h3>
+        <p>A migration estimated at 1 week, needed urgently before a holiday deadline. Designed and executed an automated pipeline in 3 hours with full data-integrity validation, immediately unblocking a dependent team.</p>
+        <div class="metrics">
+          <div class="metric"><div class="v">3 hrs</div><div class="k">vs 1 week estimate</div></div>
+          <div class="metric"><div class="v">100%</div><div class="k">data integrity</div></div>
+        </div>
+        <div class="chips"><span class="chip">Python</span><span class="chip">RDS</span><span class="chip">S3</span><span class="chip">Lambda</span></div>
+      </div>
+
+      <div class="proj reveal" data-pcat="psl platform">
+        <div class="proj-top"><span class="ptag">Low-Code</span><span class="status prod">Production</span></div>
+        <h3>Retool Platform Infrastructure</h3>
+        <p>Primary DevOps owner for PSL's Retool deployment — custom domain with SSL & Cloudflare proxy, GCP-to-AWS integration, multi-environment access controls, and ongoing platform support.</p>
+        <div class="chips"><span class="chip">GCP</span><span class="chip">AWS</span><span class="chip">Cloudflare</span><span class="chip">Terraform</span><span class="chip">GitHub Actions</span></div>
+      </div>
+
+      <div class="proj reveal" data-pcat="psl platform">
+        <div class="proj-top"><span class="ptag">IaC Module</span><span class="status prod">Production</span></div>
+        <h3>OpenSearch Terraform Module — 14 Domains</h3>
+        <p>Brought 14+ manually-managed OpenSearch domains under a reusable Terraform module — imported all domains into state with no disruption, applied FGAC policies, and standardized tagging, naming & multi-account access patterns.</p>
+        <div class="metrics">
+          <div class="metric"><div class="v">14+</div><div class="k">domains imported, no downtime</div></div>
+        </div>
+        <div class="chips"><span class="chip">Terraform</span><span class="chip">OpenSearch</span><span class="chip">FGAC</span><span class="chip">IAM</span><span class="chip">KMS</span></div>
+      </div>
+
+      <div class="proj reveal" data-pcat="psl platform">
+        <div class="proj-top"><span class="ptag">CI/CD Library</span><span class="status prod">Production</span></div>
+        <h3>GitHub Actions Reusable Workflows — 200+ Repos</h3>
+        <p>A library of reusable GitHub Actions workflows adopted across 200+ PSL repositories, standardizing CI/CD for Node.js, Python, Docker, Terraform & Kubernetes — cutting new-app onboarding from weeks to hours.</p>
+        <div class="metrics">
+          <div class="metric"><div class="v">200+</div><div class="k">repositories standardized</div></div>
+          <div class="metric"><div class="v">weeks→hrs</div><div class="k">onboarding time</div></div>
+        </div>
+        <div class="chips"><span class="chip">GitHub Actions</span><span class="chip">Docker</span><span class="chip">Terraform</span><span class="chip">Kubernetes</span></div>
+      </div>
+
+      <div class="proj reveal" data-pcat="psl platform">
+        <div class="proj-top"><span class="ptag">IaC Governance</span><span class="status prod">Production</span></div>
+        <h3>Terraform &amp; Atlantis — 270+ Projects</h3>
+        <p>Primary Terraform/Atlantis administrator across 270+ projects and 30+ AWS accounts — remote state, workspace management, policy-as-code with Sentinel, and PR-based approval workflows.</p>
+        <div class="metrics">
+          <div class="metric"><div class="v">270+</div><div class="k">Terraform projects</div></div>
+          <div class="metric"><div class="v">30+</div><div class="k">AWS accounts</div></div>
+        </div>
+        <div class="chips"><span class="chip">Terraform Enterprise</span><span class="chip">Atlantis</span><span class="chip">Sentinel</span><span class="chip">GitHub</span></div>
+      </div>
+
+      <div class="proj reveal" data-pcat="psl platform">
+        <div class="proj-top"><span class="ptag">Kubernetes</span><span class="status prod">Production</span></div>
+        <h3>Multi-Account EKS Cluster Management</h3>
+        <p>Managed 20+ EKS clusters across multiple AWS accounts & business divisions — cluster upgrades, node groups, RBAC, network policies, ArgoCD GitOps, Helm charts, and multi-cluster monitoring.</p>
+        <div class="metrics">
+          <div class="metric"><div class="v">20+</div><div class="k">EKS clusters</div></div>
+        </div>
+        <div class="chips"><span class="chip">EKS</span><span class="chip">ArgoCD</span><span class="chip">Helm</span><span class="chip">Datadog</span><span class="chip">RBAC</span></div>
+      </div>
+
+      <div class="proj reveal" data-pcat="psl platform">
+        <div class="proj-top"><span class="ptag">DevSecOps</span><span class="status prod">Production</span></div>
+        <h3>DevSecOps Maturity Framework</h3>
+        <p>Co-designed a DevSecOps maturity framework for PSL's Envista/Invista client — security scanning integration, compliance automation, vulnerability management & reporting dashboards.</p>
+        <div class="chips"><span class="chip">Checkov</span><span class="chip">tfsec</span><span class="chip">SAST/DAST</span><span class="chip">Security Hub</span></div>
+      </div>
+
+      <div class="proj reveal" data-pcat="psl incident">
+        <div class="proj-top"><span class="ptag">Incident Command</span><span class="status ongoing">Ongoing</span></div>
+        <h3>P0 Production Incident Response</h3>
+        <p>Primary P0 responder across multiple teams — DougallGPT outage, a Lambda@Edge + CloudFront multi-domain failure, the Mac database typo incident, and an SMB connector weekend outage. Systematic RCA, clear stakeholder comms & executive-level postmortems. Endorsed by multiple CTOs.</p>
+        <div class="chips"><span class="chip">CloudWatch</span><span class="chip">New Relic</span><span class="chip">CloudFront</span><span class="chip">Lambda@Edge</span><span class="chip">Secrets Manager</span></div>
+      </div>
+
+      <div class="proj reveal" data-pcat="earlier">
+        <div class="proj-top"><span class="ptag">Cuboh · SaaS</span><span class="status prod">Production</span></div>
+        <h3>SaaS Platform Infrastructure Optimization</h3>
+        <p>Managed full AWS infrastructure for Cuboh's restaurant-tech SaaS — 25% lower monthly cloud spend, 40% faster builds via Jenkins & GitHub Actions, and centralized monitoring with Datadog + ELK.</p>
+        <div class="metrics">
+          <div class="metric"><div class="v">25%</div><div class="k">cloud spend cut</div></div>
+          <div class="metric"><div class="v">40%</div><div class="k">faster builds</div></div>
+        </div>
+        <div class="chips"><span class="chip">EC2</span><span class="chip">EKS</span><span class="chip">RDS</span><span class="chip">Jenkins</span><span class="chip">Datadog</span><span class="chip">ELK</span></div>
+      </div>
+
+      <div class="proj reveal" data-pcat="earlier">
+        <div class="proj-top"><span class="ptag">PencilData · Web3</span><span class="status prod">Production</span></div>
+        <h3>Blockchain Application Cloud Infrastructure</h3>
+        <p>Cloud-native AWS architectures for high-availability blockchain apps — ArgoCD GitOps with automated rollback, OpenShift & Kubernetes security hardening, and Terraform/Ansible compliance automation.</p>
+        <div class="chips"><span class="chip">AWS</span><span class="chip">Kubernetes</span><span class="chip">OpenShift</span><span class="chip">ArgoCD</span><span class="chip">Terraform</span><span class="chip">Ansible</span></div>
+      </div>
+
+      <div class="proj reveal" data-pcat="earlier">
+        <div class="proj-top"><span class="ptag">Tile · IoT</span><span class="status prod">Production</span></div>
+        <h3>IoT Platform Infrastructure</h3>
+        <p>AWS infrastructure for Tile's IoT consumer platform — scaled containerized workloads on OpenShift & Kubernetes with HA, Jenkins pipelines for microservices, and SaltStack config management across a large server fleet.</p>
+        <div class="chips"><span class="chip">EC2</span><span class="chip">ECS</span><span class="chip">OpenShift</span><span class="chip">Jenkins</span><span class="chip">SaltStack</span><span class="chip">Helm</span></div>
+      </div>
+
+      <div class="proj reveal" data-pcat="earlier">
+        <div class="proj-top"><span class="ptag">BeyondTrust · Security</span><span class="status prod">Production</span></div>
+        <h3>Cybersecurity Platform Cloud Infrastructure</h3>
+        <p>Secure AWS infrastructure for a global cybersecurity products company — SIEM & ELK for monitoring and incident response, security audits, secrets management, and automated Jenkins CI/CD with full runbooks.</p>
+        <div class="chips"><span class="chip">EC2</span><span class="chip">RDS</span><span class="chip">VMware</span><span class="chip">ELK</span><span class="chip">Jenkins</span><span class="chip">Terraform</span></div>
+      </div>
+
+      <div class="proj reveal" data-pcat="earlier">
+        <div class="proj-top"><span class="ptag">Scotiabank · Finance</span><span class="status prod">Production</span></div>
+        <h3>Financial Services DevOps Infrastructure</h3>
+        <p>First DevOps role — provisioned VMware environments for mission-critical banking apps, automated config management with Ansible & Chef, built compliant Jenkins CI/CD, and centralized logging with ELK.</p>
+        <div class="chips"><span class="chip">VMware</span><span class="chip">Ansible</span><span class="chip">Chef</span><span class="chip">Jenkins</span><span class="chip">ELK</span><span class="chip">Tomcat</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag">05 · Toolkit</span>
+      <h2>Technical skills</h2>
+      <p>Filter by domain to explore the full stack.</p>
+    </div>
+    <div class="skill-filters reveal">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="cloud">Cloud</button>
+      <button class="filter-btn" data-filter="containers">Containers</button>
+      <button class="filter-btn" data-filter="iac">IaC & CI/CD</button>
+      <button class="filter-btn" data-filter="ai">AI / ML</button>
+      <button class="filter-btn" data-filter="security">Security</button>
+      <button class="filter-btn" data-filter="obs">Observability</button>
+      <button class="filter-btn" data-filter="lang">Languages & Data</button>
+    </div>
+    <div class="skills-grid" id="skillsGrid">
+      <div class="skill-card reveal" data-cat="cloud"><h4>AWS · Expert</h4><div class="tags"><span class="chip">EC2</span><span class="chip">EKS</span><span class="chip">Lambda</span><span class="chip">API Gateway</span><span class="chip">S3</span><span class="chip">CloudFormation</span><span class="chip">SAM</span><span class="chip">Bedrock</span><span class="chip">SageMaker</span><span class="chip">Cognito</span><span class="chip">OpenSearch</span><span class="chip">Step Functions</span><span class="chip">EventBridge</span><span class="chip">CloudFront</span><span class="chip">Route53</span><span class="chip">IAM</span><span class="chip">KMS</span><span class="chip">Secrets Manager</span><span class="chip">CloudWatch</span><span class="chip">SNS/SQS</span><span class="chip">FSx</span><span class="chip">EFS</span></div></div>
+      <div class="skill-card reveal" data-cat="cloud"><h4>GCP & Azure</h4><div class="tags"><span class="chip">Cloud Run</span><span class="chip">GKE</span><span class="chip">BigQuery</span><span class="chip">Cloud Functions</span><span class="chip">Cloud NAT</span><span class="chip">Azure AD</span><span class="chip">Key Vault</span><span class="chip">Sentinel</span><span class="chip">Azure DevOps</span><span class="chip">AKS</span><span class="chip">Azure SQL</span></div></div>
+      <div class="skill-card reveal" data-cat="containers"><h4>Containers & Orchestration</h4><div class="tags"><span class="chip">Kubernetes</span><span class="chip">Docker</span><span class="chip">Helm</span><span class="chip">ArgoCD</span><span class="chip">GitOps</span><span class="chip">OpenShift</span><span class="chip">Fargate</span><span class="chip">ECS</span><span class="chip">Podman</span></div></div>
+      <div class="skill-card reveal" data-cat="iac"><h4>Infrastructure as Code</h4><div class="tags"><span class="chip">Terraform Enterprise</span><span class="chip">CloudFormation</span><span class="chip">SAM</span><span class="chip">Ansible</span><span class="chip">ARM</span><span class="chip">Atlantis</span><span class="chip">Checkov</span><span class="chip">tfsec</span><span class="chip">Sentinel</span></div></div>
+      <div class="skill-card reveal" data-cat="iac"><h4>CI/CD & Automation</h4><div class="tags"><span class="chip">GitHub Actions</span><span class="chip">ArgoCD</span><span class="chip">Jenkins</span><span class="chip">Azure DevOps</span><span class="chip">GitLab CI/CD</span><span class="chip">CodePipeline</span><span class="chip">Atlantis</span></div></div>
+      <div class="skill-card reveal" data-cat="ai"><h4>AI/ML & Agentic Systems</h4><div class="tags"><span class="chip">AWS Bedrock</span><span class="chip">Claude Sonnet</span><span class="chip">Titan</span><span class="chip">MCP Servers</span><span class="chip">GitHub Copilot</span><span class="chip">Agentic Architectures</span><span class="chip">MLOps</span><span class="chip">SageMaker</span></div></div>
+      <div class="skill-card reveal" data-cat="security"><h4>Security</h4><div class="tags"><span class="chip">WAF</span><span class="chip">RBAC</span><span class="chip">Cognito</span><span class="chip">OIDC</span><span class="chip">mTLS</span><span class="chip">HMAC-SHA256</span><span class="chip">Checkov</span><span class="chip">tfsec</span><span class="chip">HashiCorp Vault</span><span class="chip">SIEM</span><span class="chip">CSP/CORS</span></div></div>
+      <div class="skill-card reveal" data-cat="obs"><h4>Monitoring & Observability</h4><div class="tags"><span class="chip">CloudWatch</span><span class="chip">New Relic</span><span class="chip">Datadog</span><span class="chip">ELK Stack</span><span class="chip">Prometheus</span><span class="chip">Grafana</span><span class="chip">OpenSearch</span></div></div>
+      <div class="skill-card reveal" data-cat="lang"><h4>Languages & Scripting</h4><div class="tags"><span class="chip">Python</span><span class="chip">Node.js</span><span class="chip">Bash</span><span class="chip">PowerShell</span><span class="chip">JavaScript</span><span class="chip">Apps Script</span><span class="chip">YAML</span><span class="chip">Groovy</span><span class="chip">Go (learning)</span></div></div>
+      <div class="skill-card reveal" data-cat="lang"><h4>Databases</h4><div class="tags"><span class="chip">Snowflake</span><span class="chip">PostgreSQL</span><span class="chip">OpenSearch</span><span class="chip">DynamoDB</span><span class="chip">Redis</span><span class="chip">Azure SQL</span><span class="chip">MySQL</span></div></div>
+    </div>
+
+    <div class="sec-head reveal" style="margin-top:70px;">
+      <span class="sec-tag">Credentials</span>
+      <h2 style="font-size:1.6rem;">Certifications & education</h2>
+    </div>
+    <div class="awards-grid">
+      <div class="award reveal"><div class="ic">📜</div><h3 style="font-size:1.05rem;">AWS Solutions Architect — Professional</h3><p>Amazon Web Services</p></div>
+      <div class="award reveal"><div class="ic">📜</div><h3 style="font-size:1.05rem;">Google Cloud Professional DevOps Engineer</h3><p>Google Cloud</p></div>
+      <div class="award reveal"><div class="ic">📜</div><h3 style="font-size:1.05rem;">Certified Kubernetes Administrator (CKA)</h3><p>CNCF — cluster management, networking, storage, security</p></div>
+      <div class="award reveal"><div class="ic">📜</div><h3 style="font-size:1.05rem;">Scrum Master Certified (SMC)</h3><p>Scrum Alliance</p></div>
+      <div class="award reveal"><div class="ic">🎓</div><h3 style="font-size:1.05rem;">PG Diploma, International Business Management</h3><p>St. Lawrence College, Canada</p></div>
+      <div class="award reveal"><div class="ic">🎓</div><h3 style="font-size:1.05rem;">B.Sc. Computer Science</h3><p>JNTU, India · Pursuing AZ-500</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-card reveal">
+      <h2>Let's build something exceptional</h2>
+      <p>Available immediately and ready to bring this same energy, ownership, and delivery capability to the right team. I'm not tied to a single title — open to any opportunity where I can build, own outcomes, and make an impact.</p>
+      <div class="contact-actions">
+        <a href="mailto:shaibaaz_shaik@outlook.com" class="btn-primary">✉ shaibaaz_shaik@outlook.com</a>
+        <a href="tel:+16725154786" class="btn-ghost">📞 +1 (672) 515-4786</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-inner">
+    <span>© <span id="year"></span> Shaibaaz Shaik · Principal DevOps Engineer</span>
+    <span class="mono">Edmonton, Alberta, Canada · References available upon request</span>
+  </div>
+</footer>
+
+<script>
+  // Year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Theme toggle
+  const themeBtn = document.getElementById('themeBtn');
+  const root = document.documentElement;
+  const saved = localStorage.getItem('theme');
+  if (saved === 'light') { root.setAttribute('data-theme','light'); themeBtn.textContent='☀️'; }
+  themeBtn.addEventListener('click', () => {
+    const isLight = root.getAttribute('data-theme') === 'light';
+    if (isLight) { root.removeAttribute('data-theme'); themeBtn.textContent='🌙'; localStorage.setItem('theme','dark'); }
+    else { root.setAttribute('data-theme','light'); themeBtn.textContent='☀️'; localStorage.setItem('theme','light'); }
+  });
+
+  // Mobile menu
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  menuToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  // Nav scroll state + progress
+  const nav = document.getElementById('nav');
+  const progress = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.width = (window.scrollY / h * 100) + '%';
+  });
+
+  // Typing effect
+  const words = ['production cloud platforms', 'AI-native DevOps systems', 'secure serverless architectures', 'agentic IaC pipelines', 'whatever the mission needs', 'products, not tickets'];
+  const typedEl = document.getElementById('typed');
+  let wi = 0, ci = 0, deleting = false;
+  function type() {
+    const word = words[wi];
+    typedEl.textContent = word.slice(0, ci);
+    if (!deleting && ci < word.length) { ci++; setTimeout(type, 70); }
+    else if (!deleting && ci === word.length) { deleting = true; setTimeout(type, 1600); }
+    else if (deleting && ci > 0) { ci--; setTimeout(type, 35); }
+    else { deleting = false; wi = (wi+1) % words.length; setTimeout(type, 300); }
+  }
+  type();
+
+  // Reveal on scroll
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Counter animation
+  const counters = document.querySelectorAll('.stat .num');
+  const cio = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target, target = +el.dataset.target, suffix = el.dataset.suffix || '';
+      let cur = 0; const step = Math.max(1, target / 50);
+      const tick = () => { cur += step; if (cur >= target) { el.textContent = target + suffix; } else { el.textContent = Math.floor(cur) + suffix; requestAnimationFrame(tick); } };
+      tick(); cio.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => cio.observe(c));
+
+  // Experience tabs
+  document.querySelectorAll('.exp-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.exp-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.exp-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Skill filters
+  document.querySelectorAll('.filter-btn[data-filter]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn[data-filter]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      document.querySelectorAll('.skill-card').forEach(card => {
+        card.classList.toggle('hidden', f !== 'all' && card.dataset.cat !== f);
+      });
+    });
+  });
+
+  // Project filters
+  document.querySelectorAll('.filter-btn[data-pfilter]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn[data-pfilter]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.pfilter;
+      document.querySelectorAll('#projGrid .proj').forEach(card => {
+        const cats = (card.dataset.pcat || '').split(' ');
+        card.classList.toggle('hidden', f !== 'all' && !cats.includes(f));
+      });
+    });
+  });
+
+  // Project spotlight follow cursor
+  document.querySelectorAll('.proj').forEach(p => {
+    p.addEventListener('mousemove', e => {
+      const r = p.getBoundingClientRect();
+      p.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      p.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  });
+
+  // Active nav link on scroll
+  const sections = document.querySelectorAll('section[id], header[id]');
+  const navAnchors = document.querySelectorAll('.nav-links a');
+  const sio = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navAnchors.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+      }
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  sections.forEach(s => sio.observe(s));
+
+  // Animated particle background
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [], W, H;
+  function resize() { W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
+  resize(); addEventListener('resize', resize);
+  for (let i = 0; i < 60; i++) particles.push({ x: Math.random()*W, y: Math.random()*H, vx: (Math.random()-.5)*.3, vy: (Math.random()-.5)*.3 });
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    const accent = getComputedStyle(root).getPropertyValue('--accent').trim();
+    particles.forEach((p,i) => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x<0||p.x>W) p.vx*=-1; if (p.y<0||p.y>H) p.vy*=-1;
+      ctx.beginPath(); ctx.arc(p.x,p.y,1.4,0,7); ctx.fillStyle = accent; ctx.globalAlpha=.5; ctx.fill();
+      for (let j=i+1;j<particles.length;j++) {
+        const q=particles[j], d=Math.hypot(p.x-q.x,p.y-q.y);
+        if (d<130) { ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y); ctx.strokeStyle=accent; ctx.globalAlpha=(1-d/130)*.18; ctx.lineWidth=1; ctx.stroke(); }
+      }
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+</script>
+</body>
+</html>
